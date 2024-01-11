@@ -12,28 +12,22 @@
 class Solution {
 public:
 int ans=0;
-int res=0;
-int solve(TreeNode* root, int n)
+int solve(TreeNode* root, int mini, int maxi)
 {
     if(root==NULL)
     return 0;
-    ans=max(ans,abs(n-root->val));
-    solve(root->left,n);
-    solve(root->right,n);
-    return ans;
-
-
+    mini=min(mini,root->val);
+    maxi=max(maxi,root->val);
+     ans=max(ans,abs(maxi-mini));
+    solve(root->left,mini, maxi);
+    solve(root->right,mini, maxi);
+    return ans;  
 }
     int maxAncestorDiff(TreeNode* root) {
       if(root==NULL)
       {
           return 0;
       }
-      ans=0;
-      int x=solve(root,root->val);
-      res=max(res,x);
-      maxAncestorDiff(root->left);
-      maxAncestorDiff(root->right);
-return res;
+      return solve(root,root->val,root->val);
     }
 };
